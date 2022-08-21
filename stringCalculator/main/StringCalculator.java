@@ -11,16 +11,27 @@ public class StringCalculator{
         StringTokenizer inputNumber = new StringTokenizer(inputString,",");
 
         if(inputString.length()==0 || inputNumber.countTokens()==0 ){
+            // for empty string
             return 0;
         }
         else if(inputNumber.countTokens() == 1){
+            // for single value
+            String number = inputNumber.nextToken().replace(" ", "");
+            char firstChar = number.charAt(0);
+            if( (int)firstChar >= 97 && (int)firstChar <= 122 )
+                return (int)firstChar - 96;
             return Integer.parseInt(inputString);
         }
 
         int sum = 0;
         while(inputNumber.hasMoreTokens()){
-            //trimmed token and added to 'sum' as an Integer
+            // for multiple values
+            // trimmed token and added to 'sum' as an Integer            
             String number = inputNumber.nextToken().replace(" ","");
+            if( (int)number.charAt(0) >= 97 && (int)number.charAt(0) <= 122 ){
+                sum += (int)number.charAt(0) - 96;
+                continue;
+            }
             sum += Integer.parseInt(number);
         }
         return sum; // returning answer
