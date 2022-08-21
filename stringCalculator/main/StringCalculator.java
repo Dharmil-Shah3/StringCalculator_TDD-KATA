@@ -8,7 +8,7 @@ public class StringCalculator{
         
         inputString = inputString.replace(" ", "");
         
-        StringTokenizer inputNumber = new StringTokenizer(inputString,",");
+        StringTokenizer inputNumber = new StringTokenizer(inputString,",\n");
 
         if(inputString.length()==0 || inputNumber.countTokens()==0 ){
             // for empty string
@@ -44,7 +44,7 @@ public class StringCalculator{
             }
             else if(Integer.parseInt(number) < 0){
                 // if it's negative then add to negativeNumbers String
-                negativeNumbers += Integer.parseInt(number) + ", ";
+                negativeNumbers += Integer.parseInt(number) + ",";
             }
             else if(Integer.parseInt(number)>1000){
                 // value greater than 1000 should be ingnored
