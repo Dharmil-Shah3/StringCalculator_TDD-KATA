@@ -101,4 +101,15 @@ public class TestStringCalculator{
         inputString = "50\n500\n5";
         expected = 555;
     }
+
+    @Test
+    public void inputWithCustomDelimiter(){
+        inputString = "//;\n1;2";
+        expected = 3;
+        assertEquals(expected, calculator.add(inputString));
+
+        inputString = "//***\n5***5***5";
+        expected = 15;
+        assertEquals(expected, calculator.add(inputString));
+    }
 }
