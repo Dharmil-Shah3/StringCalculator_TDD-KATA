@@ -5,8 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import java.io.InputStream;
-
 public class TestStringCalculator{
 
     StringCalculator calculator = new StringCalculator();
@@ -68,15 +66,17 @@ public class TestStringCalculator{
     public void negativeValueThrowsException(){
         //  Throws exception and display those negative numbers
         inputString = "-1";
-        assertThrows(
+        var e = assertThrows(
             IllegalArgumentException.class, 
             ()->{ calculator.add(inputString); }
         );
+        assertEquals("\n Negative values are not allowed: -1", e.getMessage());
 
         inputString = "a,-1,8, 69, -7,-79";
-        assertThrows(
+        e = assertThrows(
             IllegalArgumentException.class, 
             ()->{ calculator.add(inputString); }
         );
+        assertEquals("\n Negative values are not allowed: -1, -7, -79, ", e.getMessage());
     }
 }
