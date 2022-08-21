@@ -42,9 +42,13 @@ public class StringCalculator{
                 // if value is an alphabet then convert into according values
                 sum += (int)number.charAt(0) - 96;
             }
-            else if(Integer.parseInt(number) < 0){ 
+            else if(Integer.parseInt(number) < 0){
                 // if it's negative then add to negativeNumbers String
                 negativeNumbers += Integer.parseInt(number) + ", ";
+            }
+            else if(Integer.parseInt(number)>1000){
+                // value greater than 1000 should be ingnored
+                continue;
             }
             else{
                 sum += Integer.parseInt(number);
