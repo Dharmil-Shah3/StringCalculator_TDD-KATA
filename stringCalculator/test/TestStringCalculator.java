@@ -90,4 +90,15 @@ public class TestStringCalculator{
         expected = 0;
         assertEquals(expected, calculator.add(inputString));
     }
+
+    @Test
+    public void acceptNewlineAsADelimiter(){
+        // Accepts '\n' as a delimiter like ','
+        inputString = "1\n2,3";
+        expected = 6;
+        assertEquals(expected, calculator.add(inputString));
+
+        inputString = "50\n500\n5";
+        expected = 555;
+    }
 }
