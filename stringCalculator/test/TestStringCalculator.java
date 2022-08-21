@@ -66,7 +66,7 @@ public class TestStringCalculator{
 
     @Test
     public void negativeValueThrowsException(){
-        // Throws exception and display those negative numbers
+        //  Throws exception and display those negative numbers
         inputString = "-1";
         assertThrows(
             IllegalArgumentException.class, 
