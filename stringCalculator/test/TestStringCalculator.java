@@ -79,4 +79,15 @@ public class TestStringCalculator{
         );
         assertEquals("\n Negative values are not allowed: -1, -7, -79, ", e.getMessage());
     }
+
+    @Test
+    public void valueGreaterThan1000ShouldBeIgnored(){
+        inputString = "2,1001";
+        expected = 2;
+        assertEquals(expected, calculator.add(inputString));
+
+        inputString = "2022,1234";
+        expected = 0;
+        assertEquals(expected, calculator.add(inputString));
+    }
 }
