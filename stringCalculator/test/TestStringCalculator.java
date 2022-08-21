@@ -112,4 +112,13 @@ public class TestStringCalculator{
         expected = 15;
         assertEquals(expected, calculator.add(inputString));
     }
+
+    @Test
+    public void additionOfOddIndices(){
+        inputString = "0//;\n1;2;3,4";
+        expected = 4;
+
+        inputString = "1//***\n1***2,3***4";
+        expected = 6;
+    }
 }
