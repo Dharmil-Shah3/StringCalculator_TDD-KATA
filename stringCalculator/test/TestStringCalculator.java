@@ -118,7 +118,16 @@ public class TestStringCalculator{
         inputString = "0//;\n1;2;3,4";
         expected = 4;
 
-        inputString = "1//***\n1***2,3***4";
+        inputString = "0//***\n6***2,2***4";
+        expected = 8;
+    }
+
+    @Test
+    public void additionOfEvenIndices(){
+        inputString = "1//;\n1;2;3,4";
         expected = 6;
+
+        inputString = "1//***\n6***8,10***12";
+        expected = 20;
     }
 }
