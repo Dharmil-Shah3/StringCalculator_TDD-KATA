@@ -46,4 +46,20 @@ public class TestStringCalculator{
         expected = 15;
         assertEquals(expected, calculator.add(inputString));
     }
+
+    @Test
+    public void alphabeticValueInput(){
+        // a=1, b=2... z=16.    i.e) a+5+b = 8
+        inputString = "1,2,a,c";
+        expected = 7;
+        assertEquals(expected, calculator.add(inputString));
+
+        inputString = "z";
+        expected = 26;
+        assertEquals(expected, calculator.add(inputString));
+
+        inputString = "a,z";
+        expected = 27;
+        assertEquals(expected, calculator.add(inputString));
+    }
 }
