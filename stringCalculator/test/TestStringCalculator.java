@@ -15,8 +15,11 @@ public class TestStringCalculator{
     @Test
     public void emptyStringInput(){
         // single value input should return 0
-        inputString = ",";
+        inputString = "";
         expected = 0;
+        assertEquals(expected, calculator.add(inputString));
+        
+        inputString = ", ,, ,,,";
         assertEquals(expected, calculator.add(inputString));
     }
 
@@ -39,7 +42,7 @@ public class TestStringCalculator{
         expected = 3;
         assertEquals(expected, calculator.add(inputString));
 
-        inputString = "1,2,3,4,5";
+        inputString = "1,2,3,4, 5";
         expected = 15;
         assertEquals(expected, calculator.add(inputString));
     }
