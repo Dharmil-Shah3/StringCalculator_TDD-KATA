@@ -3,6 +3,7 @@ package stringCalculator.test;
 import stringCalculator.main.StringCalculator;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.io.InputStream;
 
@@ -61,5 +62,21 @@ public class TestStringCalculator{
         inputString = "a,z";
         expected = 27;
         assertEquals(expected, calculator.add(inputString));
+    }
+
+    @Test
+    public void negativeValueThrowsException(){
+        // Throws exception and display those negative numbers
+        inputString = "-1";
+        assertThrows(
+            IllegalArgumentException.class, 
+            ()->{ calculator.add(inputString); }
+        );
+
+        inputString = "a,-1,8, 69, -7,-79";
+        assertThrows(
+            IllegalArgumentException.class, 
+            ()->{ calculator.add(inputString); }
+        );
     }
 }
