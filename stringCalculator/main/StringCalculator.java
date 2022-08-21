@@ -6,6 +6,6 @@ public class StringCalculator{
         if(inputString.length()==0){
             return 0;
         }
-        return 1;
+        return Integer.parseInt(inputString.replace(" ",""));
     }
 }
