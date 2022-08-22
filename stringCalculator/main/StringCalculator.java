@@ -9,8 +9,8 @@ public class StringCalculator{
         inputString = inputString.replace(" ", ""); // Removing whitespaces from string
 
         String delimiter = ",\n";   // defining default delimiters
-        boolean odd = false;    // for '0//' odd indices's addition
-        boolean even = false;   // for '1//' even indices's addition
+        boolean odd = false;        // for '0//' odd indices's addition
+        boolean even = false;       // for '1//' even indices's addition
 
         if(inputString.startsWith("0//")){
             odd = true;
@@ -38,26 +38,27 @@ public class StringCalculator{
         {
             // getting '\n's postion to know end of the delimiter
             int end = inputString.indexOf("\n");
-            //setting new delimiter including '\n'
-            delimiter += inputString.substring(2, end) + "\n";
+            // setting new delimiter including '\n'
+            delimiter += inputString.substring(2, end);
             // after getting delimiter, remove that part from string to get only numbers
             inputString = inputString.substring(end+1);
         }
-        StringTokenizer inputNumber = new StringTokenizer(inputString, delimiter);
+        
+        StringTokenizer tokens = new StringTokenizer(inputString, delimiter);
 
-        if(inputString.length()==0 || inputNumber.countTokens()==0 ){
+        if(inputString.length()==0 || tokens.countTokens()==0 ){
             // for empty string
             return 0;
         }
-        else if(inputNumber.countTokens() == 1){
+        else if(tokens.countTokens() == 1){
             // for single value
-            String number = inputNumber.nextToken().replace(" ", "");
+            String number = tokens.nextToken().replace(" ", "");
             char firstChar = number.charAt(0);
             if( (int)firstChar >= 97 && (int)firstChar <= 122 ){
                 // if number is alphabet then return according values. i.e) a=1...z=26
                 return (int)firstChar - 96;
             }
-            else if(Integer.parseInt(inputString) < 0){
+            else if(Integer.parseInt(number) < 0){
                 // throws exception if number is negative
                 throw new IllegalArgumentException(
                 "\n Negative values are not allowed: "+Integer.parseInt(inputString));
@@ -67,19 +68,19 @@ public class StringCalculator{
 
         int sum = 0;
         String negativeNumbers = ""; // to check whether input has any negative values or not
-        short count=0; // for '0//' and '1//' (odd and even indices)
+        short count=0;  // for '0//' and '1//' (odd and even indices)
 
-        while(inputNumber.hasMoreTokens()){ // for multiple values
+        while(tokens.hasMoreTokens()){ // for multiple values
             
             count++;
             if((odd && count%2==0) || (even && count%2==1)){
                 // skip iteration according to odd/even '0//' '1//'
-                inputNumber.nextToken();
+                tokens.nextToken();
                 continue;
             }
 
             // trimmed token and added to 'sum' as an Integer            
-            String number = inputNumber.nextToken().replace(" ","");
+            String number = tokens.nextToken().replace(" ","");
             
             if( (int)number.charAt(0) >= 97 && (int)number.charAt(0) <= 122 ){
                 // if value is an alphabet then convert into according values

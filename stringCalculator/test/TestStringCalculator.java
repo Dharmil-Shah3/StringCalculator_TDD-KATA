@@ -65,7 +65,7 @@ public class TestStringCalculator{
     public void acceptNewlineAsADelimiter(){
         // Accepts '\n' as a delimiter like ','
         assertEquals(6, calculator.add("1\n2,3"));
-        assertEquals(555, "50\n500\n5");
+        assertEquals(555,calculator.add("50\n500\n5"));
     }
 
     @Test
