@@ -49,28 +49,24 @@ public class StringCalculator{
         short count=0;  // for '0//' and '1//' (odd and even indices)
         
         for(short i=0 ; i<tokens.length ; i++){ // for multiple values
-            
+    
             count++;
             if((odd && count%2==0) || (even && count%2==1)){
                 // skip iteration according to odd/even '0//' '1//'
                 continue;
             }
-            String number = tokens[i];
-            if(i>0 && (tokens[i-1]=="")){
-                number = "-" + number;
-            }
-            if( (int)number.charAt(0) >= 97 && (int)number.charAt(0) <= 122 ){
+            if( (int)tokens[i].charAt(0) >= 97 && (int)tokens[i].charAt(0) <= 122 ){
                 // if value is an alphabet then convert into according values a=1...z=26
-                sum += (int)number.charAt(0) - 96;
+                sum += (int)tokens[i].charAt(0) - 96;
             }
-            else if(Integer.parseInt(number) < 0){
-                negativeNumbers += Integer.parseInt(number) + " ";
+            else if(Integer.parseInt(tokens[i]) < 0){
+                negativeNumbers += Integer.parseInt(tokens[i]) + " ";
             }
-            else if(Integer.parseInt(number)>1000){
+            else if(Integer.parseInt(tokens[i])>1000){
                 continue;
             }
             else{
-                sum += Integer.parseInt(number);
+                sum += Integer.parseInt(tokens[i]);
             }
         }
         if(negativeNumbers != ""){
