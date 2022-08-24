@@ -1,6 +1,6 @@
 package stringCalculator.main;
 
-import java.util.StringTokenizer;
+import java.util.ArrayList;
 
 public class StringCalculator{
     
@@ -11,9 +11,25 @@ public class StringCalculator{
             return inputString.substring(3);
         }
         else{
-            // if it's delimiter then just trim 0 or 1, keep '//' as is.
+            // if it's delimiter then just trim 0 or 1, keep '//' as it is.
             return inputString.substring(1);
         }
+    }
+
+    private String [] splitAndRemoveEmptyTokens(String inputString, String delimiter){
+        // this function removes empty elements from splitted array and also hepls in case of negative numbers
+        String tempTokens[] = inputString.split(delimiter);
+        ArrayList <String> tokens = new ArrayList<String>();
+    
+        for(int i=0 ; i<tempTokens.length ; i++){
+            if(i>0 && !tempTokens[i].isBlank() && delimiter.equals("-") && tempTokens[i-1]==""){
+                tokens.add("-"+tempTokens[i]); // add '-' at start if last element was empty
+            }
+            else if(!tempTokens[i].isBlank()){
+                tokens.add(tempTokens[i]);     // add value as it is if last element was not empty
+            }
+        }
+        return tokens.toArray(new String[0]);
     }
 
     private int singleValueEval(String token) throws IllegalArgumentException {
@@ -22,33 +38,33 @@ public class StringCalculator{
             return (int)token.charAt(0) - 96;
         }
         else if(Integer.parseInt(token) < 0){
-            throw new IllegalArgumentException("\n Negative values are not allowed: "+Integer.parseInt(token));
+            throw new IllegalArgumentException("\n Negative values are not allowed: [ "+Integer.parseInt(token)+" ]");
         }
         return Integer.parseInt(token);
     }
 
-    private int multiValueEval(StringTokenizer tokens, boolean odd, boolean even){
+    private int multiValueEval(String tokens[], boolean odd, boolean even){
         int sum = 0;
         String negativeNumbers = "";
         short count=0;  // for '0//' and '1//' (odd and even indices)
-
-        while(tokens.hasMoreTokens()){ // for multiple values
+        
+        for(short i=0 ; i<tokens.length ; i++){ // for multiple values
             
             count++;
             if((odd && count%2==0) || (even && count%2==1)){
                 // skip iteration according to odd/even '0//' '1//'
-                tokens.nextToken();
                 continue;
             }
-
-            String number = tokens.nextToken();
-            
+            String number = tokens[i];
+            if(i>0 && (tokens[i-1]=="")){
+                number = "-" + number;
+            }
             if( (int)number.charAt(0) >= 97 && (int)number.charAt(0) <= 122 ){
                 // if value is an alphabet then convert into according values a=1...z=26
                 sum += (int)number.charAt(0) - 96;
             }
             else if(Integer.parseInt(number) < 0){
-                negativeNumbers += Integer.parseInt(number) + ", ";
+                negativeNumbers += Integer.parseInt(number) + " ";
             }
             else if(Integer.parseInt(number)>1000){
                 continue;
@@ -58,19 +74,18 @@ public class StringCalculator{
             }
         }
         if(negativeNumbers != ""){
-            throw new IllegalArgumentException(
-            "\n Negative values are not allowed: "+negativeNumbers);
+            throw new IllegalArgumentException("\n Negative values are not allowed: [ "+negativeNumbers+"]");
         }
         return sum;
     }
 
     public int add(String inputString){
         
-        inputString = inputString.replace(" ", ""); // Removing whitespaces from string
+        inputString = inputString.replace(" ", "");
     
-        String delimiter = ",\n";
-        boolean odd = false;        // for '0//' odd indices's addition
-        boolean even = false;       // for '1//' even indices's addition
+        String delimiter = ",";
+        boolean odd = false;  // for '0//' odd indices's addition
+        boolean even = false; // for '1//' even indices's addition
     
         if(inputString.startsWith("0//")){
             odd = true;
@@ -86,22 +101,25 @@ public class StringCalculator{
     
         if(inputString.startsWith("//"))
         {
-            // getting '\n's postion to know end of the delimiter
+            // get '\n' postion to know end of the delimiter
             int end = inputString.indexOf("\n");
-            delimiter += inputString.substring(2, end);
+            delimiter = inputString.substring(2, end);
             // after getting delimiter, remove that part from string to get only numbers
             inputString = inputString.substring(end+1);
+            inputString = inputString.replace(",", delimiter);
         }
         
-        StringTokenizer tokens = new StringTokenizer(inputString, delimiter);
-    
-        if(inputString.length()==0 || tokens.countTokens()==0 ){ // for empty string
+        inputString = inputString.replace("\n", delimiter); // making delimiter unified by replacing \n(if any) with delimiter
+        
+        String [] tokens = splitAndRemoveEmptyTokens(inputString, delimiter);
+        
+        if(inputString.length()==0 || tokens.length==0 ){
             return 0;
         }
-        else if(tokens.countTokens() == 1){ // for single value
-            return singleValueEval(tokens.nextToken());
+        else if(tokens.length == 1){
+            return singleValueEval(tokens[0]);
         }
-        else{ // for multiple value
+        else{
             return multiValueEval(tokens, odd, even);
         }
     }
